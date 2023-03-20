@@ -396,9 +396,7 @@ public class GameDeckTest {
     @Test
     public void testSplitOxygen() throws Exception {
 		Field cardsField = Deck.class.getDeclaredField("cards");
-		Field oxygensField = GameDeck.class.getDeclaredField("oxygens");
 		cardsField.setAccessible(true);
-		oxygensField.setAccessible(true);
 
         GameDeck gameDeck = new GameDeck();
 		Oxygen oxygen1 = new Oxygen(1);
@@ -408,15 +406,24 @@ public class GameDeckTest {
 
 		Oxygen o2 = new Oxygen(2);
         Oxygen[] oxygens = gameDeck.splitOxygen(o2);
-		Collection<Oxygen> deckOxygens = (Collection<Oxygen>)oxygensField.get(gameDeck);
+		Collection<Card> deckCards = (Collection<Card>)cardsField.get(gameDeck);
+		Iterator<Card> iterator = deckCards.iterator();
 
 		assertEquals(2, oxygens.length);
 	    assertSame(oxygen1, oxygens[0]);
 	    assertSame(oxygen2, oxygens[1]);
 		assertEquals(1, ((Collection<Card>)cardsField.get(gameDeck)).size());
-		assertEquals(1, deckOxygens.size());
-		Iterator<Oxygen> iterator = deckOxygens.iterator();
 		assertSame(o2, (Oxygen)iterator.next());
+
+        try {
+    		Field oxygensField = GameDeck.class.getDeclaredField("oxygens");
+	    	oxygensField.setAccessible(true);
+			Collection<Card> deckOxygens = (Collection<Card>)oxygensField.get(gameDeck);
+			assertEquals(1, deckOxygens.size());
+			iterator = deckOxygens.iterator();
+			assertSame(o2, (Oxygen)iterator.next());
+		} catch (NoSuchFieldException e ){}
+
     }
 
 }

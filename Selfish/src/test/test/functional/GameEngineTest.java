@@ -271,7 +271,7 @@ public class GameEngineTest {
 		    Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
@@ -293,14 +293,15 @@ public class GameEngineTest {
 		    Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
 
 		engine.startTurn();
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
-		while (currentPlayer.breathe() > 2); engine.travel(currentPlayer);
+		while (currentPlayer.oxygenRemaining() > 2) currentPlayer.breathe();
+		engine.travel(currentPlayer);
 		assertTrue(engine.gameOver());
 	}
 
@@ -387,7 +388,7 @@ public class GameEngineTest {
 		    Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
@@ -410,10 +411,10 @@ public class GameEngineTest {
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
         List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers); expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
-		expected.sort(null);
+		expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 
 		List<Astronaut> actual = engine.getAllPlayers();
-		actual.sort(null);
+		actual.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 		assertEquals(expected, actual);
 	}
 
@@ -434,10 +435,10 @@ public class GameEngineTest {
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
         List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers); expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
-		expected.sort(null);
+		expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 
 		List<Astronaut> actual = engine.getAllPlayers();
-		actual.sort(null);
+		actual.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 		assertEquals(expected, actual);
 	}
 
@@ -459,10 +460,10 @@ public class GameEngineTest {
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
         List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers); expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
-		expected.sort(null);
+		expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 
 		List<Astronaut> actual = engine.getAllPlayers();
-		actual.sort(null);
+		actual.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 		assertEquals(expected, actual);
 	}
 
@@ -485,10 +486,10 @@ public class GameEngineTest {
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
         List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers); expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
-		expected.sort(null);
+		expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 
 		List<Astronaut> actual = engine.getAllPlayers();
-		actual.sort(null);
+		actual.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
 		assertEquals(expected, actual);
 	}
 
@@ -623,7 +624,7 @@ public class GameEngineTest {
 			if (i==0) terry = currentPlayer;
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
@@ -646,14 +647,15 @@ public class GameEngineTest {
 		    Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
 
 		engine.startTurn();
 		Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
-		while (currentPlayer.breathe() > 2); engine.travel(currentPlayer);
+		while (currentPlayer.oxygenRemaining() > 2) currentPlayer.breathe();
+		engine.travel(currentPlayer);
 		assertNull(engine.getWinner());
 	}
 
@@ -724,7 +726,7 @@ public class GameEngineTest {
 		    Astronaut currentPlayer = (Astronaut)currentPlayerField.get(engine);
 		    List<Oxygen> oxygens = (List<Oxygen>)oxygensField.get(currentPlayer);
 			while ((i==7 || i==8) && currentPlayer.breathe() > 0);
-			while (i%3 == 0 && oxygens.size() < 5) oxygens.add(new Oxygen(2));
+			while ((i%3 == 0 || i>8) && oxygens.size() < 3) oxygens.add(new Oxygen(2));
 			if (i<5 || i>8) engine.travel(currentPlayer);
 		    engine.endTurn();
 		}
@@ -995,44 +997,82 @@ public class GameEngineTest {
 		Field gameDeckField = GameEngine.class.getDeclaredField("gameDeck");
 		Field gameDiscardField = GameEngine.class.getDeclaredField("gameDiscard");
 		Field cardsField = Deck.class.getDeclaredField("cards");
-		Field oxygensField = GameDeck.class.getDeclaredField("oxygens");
 		Field valueField = Oxygen.class.getDeclaredField("value");
 		gameDeckField.setAccessible(true);
 		gameDiscardField.setAccessible(true);
 		cardsField.setAccessible(true);
-		oxygensField.setAccessible(true);
 		valueField.setAccessible(true);
-
 		GameDeck gameDeck = (GameDeck)gameDeckField.get(engine);
 		Collection<Card> gameDeckCards = (Collection<Card>)cardsField.get(gameDeck);
-		Collection<Oxygen> gameDeckO2 = (Collection<Oxygen>)oxygensField.get(gameDeck);
 		GameDeck gameDiscard = (GameDeck)gameDiscardField.get(engine);
 		Collection<Card> gameDiscardCards = (Collection<Card>)cardsField.get(gameDiscard);
-		Collection<Oxygen> gameDiscardO2 = (Collection<Oxygen>)oxygensField.get(gameDiscard);
 
 		int oldGameDeckSize = gameDeckCards.size();
 		int oldGameDiscardSize = gameDiscardCards.size();
-		int oldGameDecKO2Size = gameDeckO2.size();
-		int oldGameDiscardO2Size = gameDiscardO2.size();
-		int oldGameDecKO2Val = 0; int oldGameDiscardO2Val = 0;
+		int oldGameDeckCardsVal = 0; int oldGameDiscardCardsVal = 0;
+		int oldGameDeckO2Val = 0; int oldGameDiscardO2Val = 0;
+		int oldGameDeckO2Size = -1; int oldGameDiscardO2Size = -1;
+		Collection<Card> gameDeckO2 = null; Collection<Card> gameDiscardO2 = null;
+		Iterator<Card> iterator;
 
-		Iterator<Oxygen> iterator = gameDeckO2.iterator();
-        while (iterator.hasNext()) oldGameDecKO2Val += (Integer)valueField.get(iterator.next());
-		iterator = gameDiscardO2.iterator();
-        while (iterator.hasNext()) oldGameDiscardO2Val += (Integer)valueField.get(iterator.next());
+		iterator = gameDeckCards.iterator();
+		while (iterator.hasNext()) {
+			Card c = iterator.next();
+			if (c.toString().equals("Oxygen(1)") || c.toString().equals("Oxygen(2)")) {
+				oldGameDeckCardsVal += (Integer)valueField.get((Oxygen)c);
+			}
+		}
+		iterator = gameDiscardCards.iterator();
+		while (iterator.hasNext()) {
+			Card c = iterator.next();
+			if (c.toString().equals("Oxygen(1)") || c.toString().equals("Oxygen(2)")) {
+				oldGameDiscardCardsVal += (Integer)valueField.get((Oxygen)c);
+			}
+		}
+
+		try {
+			Field oxygensField = GameDeck.class.getDeclaredField("oxygens");
+			oxygensField.setAccessible(true);
+			gameDeckO2 = (Collection<Card>)oxygensField.get(gameDeck);
+			gameDiscardO2 = (Collection<Card>)oxygensField.get(gameDiscard);
+			oldGameDeckO2Size = gameDeckO2.size();
+			oldGameDiscardO2Size = gameDiscardO2.size();
+			iterator = gameDeckO2.iterator();
+			while (iterator.hasNext()) oldGameDeckO2Val += (Integer)valueField.get(iterator.next());
+			iterator = gameDiscardO2.iterator();
+			while (iterator.hasNext()) oldGameDiscardO2Val += (Integer)valueField.get(iterator.next());
+		} catch (NoSuchFieldException e) {}
 
 		Oxygen[] rtn = engine.splitOxygen(new Oxygen(2));
 
 		assertEquals(oldGameDeckSize+oldGameDiscardSize-1, gameDeckCards.size()+gameDiscardCards.size());
-		assertEquals(oldGameDecKO2Size+oldGameDiscardO2Size-1, gameDeckO2.size()+gameDiscardO2.size());
+		
+		int gameDeckCardsVal = 0; int gameDiscardCardsVal = 0;
+		iterator = gameDeckCards.iterator();
+		while (iterator.hasNext()) {
+			Card c = iterator.next();
+			if (c.toString().equals("Oxygen(1)") || c.toString().equals("Oxygen(2)")) {
+				gameDeckCardsVal += (Integer)valueField.get((Oxygen)c);
+			}
+		}
+		iterator = gameDiscardCards.iterator();
+		while (iterator.hasNext()) {
+			Card c = iterator.next();
+			if (c.toString().equals("Oxygen(1)") || c.toString().equals("Oxygen(2)")) {
+				gameDiscardCardsVal += (Integer)valueField.get((Oxygen)c);
+			}
+		}
+		assertEquals(oldGameDeckCardsVal+oldGameDiscardCardsVal, gameDeckCardsVal+gameDiscardCardsVal);
 
-		int gameDecKO2Val = 0; int gameDiscardO2Val = 0;
-		iterator = gameDeckO2.iterator();
-        while (iterator.hasNext()) gameDecKO2Val += (Integer)valueField.get(iterator.next());
-		iterator = gameDiscardO2.iterator();
-        while (iterator.hasNext()) gameDiscardO2Val += (Integer)valueField.get(iterator.next());
-
-		assertEquals(oldGameDecKO2Val+oldGameDiscardO2Val, gameDecKO2Val+gameDiscardO2Val);
+		if (oldGameDeckO2Size > -1 && oldGameDiscardO2Size > -1) {
+		    assertEquals(oldGameDeckO2Size+oldGameDiscardO2Size-1, gameDeckO2.size()+gameDiscardO2.size());
+			int gameDeckO2Val = 0; int gameDiscardO2Val = 0;
+			iterator = gameDeckO2.iterator();
+			while (iterator.hasNext()) gameDeckO2Val += (Integer)valueField.get(iterator.next());
+			iterator = gameDiscardO2.iterator();
+			while (iterator.hasNext()) gameDiscardO2Val += (Integer)valueField.get(iterator.next());
+			assertEquals(oldGameDeckO2Val+oldGameDiscardO2Val, gameDeckO2Val+gameDiscardO2Val);
+		}
 
 		return rtn;
 	}
@@ -1306,7 +1346,7 @@ public class GameEngineTest {
 		Card topmostTrackCard = track.get(track.size()-1);
 		Card topmostSpaceDeckCard = spaceDeck.get(spaceDeck.size()-1);
 		int trackSize = track.size();
-		while (currentPlayer.breathe() > 2);
+		while (currentPlayer.oxygenRemaining() > 2) currentPlayer.breathe();
 		Card rtn = engine.travel(currentPlayer);
 		assertEquals(trackSize+1, track.size());
 		assertNotSame(topmostTrackCard, track.get(track.size()-1));

@@ -501,7 +501,7 @@ public class ExceptionTest {
 		Field oxygens = Astronaut.class.getDeclaredField("oxygens");
 		oxygens.setAccessible(true);
 		List<Oxygen> o2 = (List<Oxygen>)oxygens.get(player);
-		Oxygen o1 = o2.get(0);
+		Oxygen o1 = new Oxygen(1);
 		o2.clear();
 		o2.add(o1);
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
