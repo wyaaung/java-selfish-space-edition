@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Card implements Comparable<Card>, Serializable{
     private String name;
-    
+
     private String description;
 
     private static final long serialVersionUID = 5016812401135889608L;

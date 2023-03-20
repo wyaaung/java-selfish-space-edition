@@ -1,6 +1,6 @@
 package selfish.deck;
 
-public class SpaceDeck {
+public class SpaceDeck extends Deck{
     public static final String ASTEROID_FIELD = "Asteroid field";
     public static final String BLANK_SPACE = "Blank space";
     public static final String COSMIC_RADIATION = "Cosmic radiation";

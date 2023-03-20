@@ -13,6 +13,7 @@ import java.util.List;
 import java.io.Serializable;
 
 public class GameEngine implements Serializable{
+
     private Collection<Astronaut> activePlayers;
 
     private List<Astronaut> corpses;

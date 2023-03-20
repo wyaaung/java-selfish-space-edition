@@ -1,6 +1,6 @@
 package selfish.deck;
 
-public class GameDeck {
+public class GameDeck extends Deck{
     public static final String HACK_SUIT = "Hack suit";
     public static final String HOLE_IN_SUIT = "Hole in suit";
     public static final String LASER_BLAST = "Laser blast";
