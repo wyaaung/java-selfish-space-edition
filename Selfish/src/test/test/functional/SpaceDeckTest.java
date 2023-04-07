@@ -326,7 +326,7 @@ public class SpaceDeckTest {
 		Field cardsField = clazz.getDeclaredField("cards");
 		cardsField.setAccessible(true);
 		List<Card> cards = (List<Card>)cardsField.get(spaceDeck);
-		assertEquals(cards.size(), 42);
+		assertEquals(42, cards.size());
 		assertEquals("Asteroid field", cards.get(9).toString());
 		assertEquals("Cosmic radiation", cards.get(2).toString());
 		assertEquals("Hyperspace", cards.get(5).toString());

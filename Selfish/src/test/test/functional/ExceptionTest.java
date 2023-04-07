@@ -1,6 +1,7 @@
 package test.functional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -255,13 +256,19 @@ public class ExceptionTest {
 		gameDeckField.setAccessible(true);
 		GameDeck deck = (GameDeck)gameDeckField.get(engine);
 
-		while (discard.size() < 5) {
+		int attempts = 0; int sz = discard.size();
+		while (discard.size() < 5 && attempts < 100) {
 			Card c = deck.draw();
 			if (!(c.toString().equals(GameDeck.OXYGEN_1) || c.toString().equals(GameDeck.OXYGEN_2))) {
 				discard.add(c);
+				assertTrue(sz < discard.size());
 			}
+		} assertNotEquals(99, attempts);
+		sz = deck.size();
+		while (deck.size() > 0) {
+			deck.draw();
+			assertTrue(sz > deck.size());
 		}
-		while (deck.size() > 0) deck.draw();
 
 		deck.add(new Oxygen(2));
 		discard.add(new Oxygen(2));
@@ -351,7 +358,11 @@ public class ExceptionTest {
 		GameDeck gameDeck = (GameDeck)gameDeckField.get(engine);
 		GameDeck gameDiscard = (GameDeck)gameDiscardField.get(engine);
 
-		while (gameDeck.size() > 0) gameDeck.draw();
+		int sz = gameDeck.size();
+		while (gameDeck.size() > 0) {
+			gameDeck.draw();
+			assertTrue(sz > gameDeck.size());
+		}
 		gameDeck.add(new Oxygen(1));
 
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
@@ -373,7 +384,11 @@ public class ExceptionTest {
 		GameDeck gameDiscard = (GameDeck)gameDiscardField.get(engine);
 
 		gameDiscard.add(new Oxygen(1));
-		while (gameDeck.size() > 0) gameDeck.draw();
+		int sz = gameDeck.size();
+		while (gameDeck.size() > 0) {
+			gameDeck.draw();
+			assertTrue(sz > gameDeck.size());
+		}
 
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
 		    engine.splitOxygen(new Oxygen(2));
@@ -469,8 +484,10 @@ public class ExceptionTest {
 		Field track = Astronaut.class.getDeclaredField("track");
 		track.setAccessible(true);
 		Collection<Card> trackCards = (Collection<Card>)track.get(winner);
+		int sz = trackCards.size();
 		while (trackCards.size() < 6) {
 			trackCards.add(new Card("Blank Space", "This card is blank. Nothing to see here"));
+			assertTrue(sz < trackCards.size());
 		}
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
 		    engine.startTurn();
