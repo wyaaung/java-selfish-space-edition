@@ -12,15 +12,28 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Random;
 
+/** Deck Class
+ *  @author Wai Yan Aung
+ *  @version 1
+ */
 public abstract class Deck implements Serializable{
 
     private Collection<Card> cards = new ArrayList<Card>();
 
     private static final long serialVersionUID = 5016812401135889608L;
 
+    /**
+     * Deck Constructor
+     */
     protected Deck(){
     }
 
+    /**
+     * Load cards from a text file
+     * @param path Text filepath for cards
+     * @return List of cards
+     * @throws IOException Type of Exception
+     */
     protected static List<Card> loadCards(String path) throws IOException{
         BufferedReader fileStream = new BufferedReader(new FileReader(path));
 
@@ -41,6 +54,11 @@ public abstract class Deck implements Serializable{
         return returningCards;
     }
 
+    /**
+     * Convert each line of the file into the appropriate number of cards of particular type
+     * @param str each line of the file
+     * @return Array of cards
+     */
     protected static Card[] stringToCards(String str){
         String[] splitted = str.split("; ");
 
@@ -57,16 +75,30 @@ public abstract class Deck implements Serializable{
         return newCards;
     }
 
+    /**
+     * Add card into collection of cards
+     * @param card Card
+     * @return Total number of cards in the deck
+     */
     public int add(Card card){
         this.cards.add(card);
         return this.cards.size();
     }
 
+    /**
+     * Add list of cards into collection of cards
+     * @param cards list of cards
+     * @return Total number of cards in the deck
+     */
     protected int add(List<Card> cards){
         this.cards.addAll(cards);
         return this.cards.size();
     }
 
+    /**
+     * Function that removes and returns a card from the deck
+     * @return Card
+     */
     public Card draw(){
         if (this.cards.isEmpty()){
             throw new IllegalStateException();
@@ -80,14 +112,26 @@ public abstract class Deck implements Serializable{
         return card;
     }
 
+    /**
+     * Function to remove a card from the deck
+     * @param card Card
+     */
     public void remove(Card card){
         this.cards.remove(card);
     }
 
+    /**
+     * Function to shuffle the deck
+     * @param random Random instance of java.util.Random
+     */
     public void shuffle(Random random){
         Collections.shuffle((ArrayList<Card>) this.cards, random);
     }
 
+    /**
+     * Function to return the number of cards currently in this deck
+     * @return the number of cards currently in this deck
+     */
     public int size(){
         return this.cards.size();
     }
