@@ -3,8 +3,8 @@ package selfish.deck;
 import java.io.Serializable;
 
 public class Card implements Comparable<Card>, Serializable{
-    private String name;
 
+    private String name;
     private String description;
 
     private static final long serialVersionUID = 5016812401135889608L;
@@ -15,14 +15,14 @@ public class Card implements Comparable<Card>, Serializable{
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String toString() {
-        return "";
+        return this.name;
     }
 
     public int compareTo(Card card){
-        return 0;
+        return this.toString().compareTo(card.toString());
     }
 }
