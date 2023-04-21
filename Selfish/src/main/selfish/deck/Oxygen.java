@@ -8,7 +8,7 @@ package selfish.deck;
 public class Oxygen extends Card{
     private int value;
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5016812401135889608L;
 
     /**
      * Public Constructor of Oxygen (Specialized Card)
