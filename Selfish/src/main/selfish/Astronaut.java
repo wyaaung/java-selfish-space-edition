@@ -199,6 +199,10 @@ public class Astronaut implements Serializable{
     }
 
     public boolean hasWon(){
+        if (this.distanceFromShip() == 0 && this.oxygenRemaining() >= 1){
+            return true;
+        }
+
         return false;
     }
 
