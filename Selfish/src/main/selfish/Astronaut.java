@@ -52,8 +52,23 @@ public class Astronaut implements Serializable{
             return 0;
         }
 
-        this.oxygens.remove(this.oxygens.stream().filter(oxygen -> (oxygen.getValue() == 1))
-                    .findFirst().orElse(null));
+        Oxygen oxygenOneCard = this.oxygens.stream()
+                    .filter(oxygen -> (oxygen.getValue() == 1))
+                    .findFirst().orElse(null);
+
+        if (oxygenOneCard == null){
+            Oxygen oxygenTwoCard = this.oxygens.stream()
+            .filter(oxygen -> (oxygen.getValue() == 2))
+            .findFirst().orElse(null);
+            Oxygen[] oxygenCards = this.game.splitOxygen(oxygenTwoCard);
+            this.oxygens.remove(oxygenTwoCard);
+            this.oxygens.add(oxygenCards[1]);
+        } else{
+            this.oxygens.remove(oxygenOneCard);
+            if (this.oxygens.size() == 0){
+                this.game.killPlayer(this);
+            }
+        }
 
         return this.oxygens.stream().collect(Collectors.summingInt(oxygen -> oxygen.getValue()));
     }
@@ -245,6 +260,10 @@ public class Astronaut implements Serializable{
 
     public Oxygen siphon(){
         Oxygen oxygenCard = this.oxygens.stream().findFirst().orElse(null);
+
+        if (oxygenCard == null){
+            throw new IllegalStateException();
+        }
 
         if (oxygenCard.getValue() == 1){
             this.oxygens.remove(oxygenCard);
