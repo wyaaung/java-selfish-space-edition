@@ -8,9 +8,12 @@ import selfish.deck.Deck;
 import selfish.deck.Oxygen;
 import selfish.deck.Card;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import java.io.Serializable;
+
 
 public class GameEngine implements Serializable{
 
@@ -34,10 +37,24 @@ public class GameEngine implements Serializable{
 
     private static final long serialVersionUID = 5016812401135889608L;
 
-    private GameEngine(){}
+    private GameEngine(){
+    }
 
-    public GameEngine(long seed, String gameDeck, String spaceDeck){
+    public GameEngine(long seed, String gameDeck, String spaceDeck) throws GameException{
+        this.random = new Random(seed);
 
+        this.gameDeck = new GameDeck(gameDeck);
+        this.gameDiscard = new GameDeck();
+        this.gameDeck.shuffle(random);
+
+        this.spaceDeck = new SpaceDeck(spaceDeck);
+        this.spaceDiscard = new SpaceDeck();
+        this.spaceDeck.shuffle(random);
+
+        this.activePlayers = new ArrayList<Astronaut>();
+        this.corpses = new ArrayList<Astronaut>();
+        this.currentPlayer = null;
+        this.hasStarted = false;
     }
 
     public int addPlayer(String player){return 0;}
@@ -47,8 +64,13 @@ public class GameEngine implements Serializable{
     public boolean gameOver(){return false;}
 
     public List<Astronaut> getAllPlayers(){
-        List<Astronaut> astronauts = List.copyOf(activePlayers);
-        return astronauts;
+        List<Astronaut> allPlayers = new ArrayList<Astronaut>(this.activePlayers);
+        allPlayers.addAll(this.corpses);
+        if (currentPlayer != null){
+            allPlayers.add(currentPlayer);
+        }
+
+        return allPlayers;
     }
 
     public Astronaut getCurrentPlayer(){
@@ -56,23 +78,23 @@ public class GameEngine implements Serializable{
     }
 
     public int getFullPlayerCount(){
-        return activePlayers.size();
+        return 0;
     }
 
     public GameDeck getGameDeck(){
-        return gameDeck;
+        return this.gameDeck;
     }
 
     public GameDeck getGameDiscard(){
-        return gameDiscard;
+        return this.gameDiscard;
     }
 
     public SpaceDeck getSpaceDeck(){
-        return spaceDeck;
+        return this.spaceDeck;
     }
 
     public SpaceDeck getSpaceDiscard(){
-        return spaceDiscard;
+        return this.spaceDiscard;
     }
 
     public Astronaut getWinner(){
