@@ -1,6 +1,7 @@
 package selfish.deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import selfish.GameException;
 
@@ -94,6 +95,13 @@ public class GameDeck extends Deck{
             }
         }
 
+        Collections.reverse(cardsList);
+        this.add(cardsList);
+
+        if (oxygenCard == null){
+            throw new IllegalStateException();
+        }
+
         return oxygenCard;
     }
 
@@ -104,17 +112,12 @@ public class GameDeck extends Deck{
      */
     public Oxygen[] splitOxygen(Oxygen unit){
         if (unit.getValue() != 2){
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
 
         // Draw Oxygen(1) twice
         Oxygen oxygenCardOne = this.drawOxygen(1);
         Oxygen oxygenCardTwo = this.drawOxygen(1);
-
-        // Check if either of drawn oxygen cards were null
-        if (oxygenCardOne == null || oxygenCardTwo == null){
-            throw new IllegalStateException("Not enough oxygen cards in the deck.");
-        }
 
         // Adding the Oxygen(2) Card
         this.add(unit);
