@@ -1,6 +1,7 @@
 package selfish;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,23 +12,33 @@ public class Astronaut implements Serializable{
     private GameEngine game;
 
     private List<Card> actions;
-    
     private List<Oxygen> oxygens;
+    private Collection<Card> track;
 
     private String name;
-
-    private Collection<Card> track;
 
     private static final long serialVersionUID = 5016812401135889608L;
 
     public Astronaut(String name, GameEngine game) {
         this.game = game;
         this.name = name;
+
+        this.actions = new ArrayList<Card>();
+        this.oxygens = new ArrayList<Oxygen>();
+        this.track = new ArrayList<Card>();
     }
 
-    public void addToHand(Card card){}
+    public void addToHand(Card card){
+        if (card instanceof Oxygen){
+            this.oxygens.add((Oxygen) card);
+        }else{
+            this.actions.add(card);
+        }
+    }
 
-    public void addToTrack(Card card){}
+    public void addToTrack(Card card){
+        this.track.add(card);
+    }
 
     public int breathe(){
         return 0;
@@ -42,22 +53,23 @@ public class Astronaut implements Serializable{
     }
 
     public String getActionsStr(boolean enumerated, boolean excludeShields){
-        return "";
+        return null;
     }
 
     public List<Card> getHand(){
-        return actions;
+        return null;
     }
 
     public String getHandStr(){
-        return "";
+        return null;
     }
 
     public Collection<Card> getTrack(){
-        return track;
+        return this.track;
     }
 
-    public void hack(Card card){}
+    public void hack(Card card){
+    }
 
     public Card hack(String card){
         return null;
@@ -76,7 +88,10 @@ public class Astronaut implements Serializable{
     }
 
     public boolean isAlive(){
-        return true;
+        if (this.oxygenRemaining() > 0){
+            return true;
+        }
+        return false;
     }
 
     public Card laserBlast(){
@@ -84,7 +99,14 @@ public class Astronaut implements Serializable{
     }
 
     public int oxygenRemaining(){
-        return oxygens.size();
+        // Get total number of oxygen the astronaut has
+        int totalOxygenValue = 0;
+        for (Oxygen oxygenCard: this.oxygens){
+            totalOxygenValue += oxygenCard.getValue();
+        }
+
+        // Return total number of oxygen the astronaut has
+        return totalOxygenValue;
     }
 
     public Card peekAtTrack(){
@@ -92,17 +114,24 @@ public class Astronaut implements Serializable{
     }
 
     public Oxygen siphon(){
-        return new Oxygen(7);
+        return null;
     }
 
     public Card steal(){
-        return new Card("SAMPLE", "SAMPLE");
+        return null;
     }
 
-    public void swapTrack(Astronaut swapee){}
+    public void swapTrack(Astronaut swapee){
+        Collection<Card> swapeeTrack = swapee.getTrack();
+        swapee.track = this.track;
+        this.track = swapeeTrack;
+    }
 
     public String toString() {
-        return "";
+        if (this.isAlive()){
+            return this.name;
+        }
+        return this.name + " (is dead)";
     }
 
 }
