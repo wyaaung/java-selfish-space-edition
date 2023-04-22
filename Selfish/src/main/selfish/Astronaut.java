@@ -15,6 +15,10 @@ import selfish.deck.GameDeck;
 import selfish.deck.Oxygen;
 import selfish.deck.SpaceDeck;
 
+/** Astronaut Class
+ *  @author Wai Yan Aung
+ *  @version 1
+ */
 public class Astronaut implements Serializable{
     private GameEngine game;
 
@@ -26,6 +30,11 @@ public class Astronaut implements Serializable{
 
     private static final long serialVersionUID = 5016812401135889608L;
 
+    /**
+     * Astronaut constructor
+     * @param name Name of the astronaut
+     * @param game GameEngine insatnce this Astronaut belongs to
+     */
     public Astronaut(String name, GameEngine game) {
         this.game = game;
         this.name = name;
@@ -35,6 +44,10 @@ public class Astronaut implements Serializable{
         this.track = new ArrayList<Card>();
     }
 
+    /**
+     * Adding action card or oxygen card to the Astronaut
+     * @param card Action Card or Oxygen Card
+     */
     public void addToHand(Card card){
         if (card instanceof Oxygen){
             this.oxygens.add((Oxygen) card);
@@ -43,10 +56,19 @@ public class Astronaut implements Serializable{
         }
     }
 
+    /**
+     * Adding SpaceCard to track
+     * @param card SpaceCard
+     */
     public void addToTrack(Card card){
         this.track.add(card);
     }
 
+    /**
+     * Removes a single-value Oxygen from the Astronaut
+     * and adds the card to the Game Engine's gameDiscard pile
+     * @return the number of Oxygens remaining (Total value of all Oxygen Cards)
+     */
     public int breathe(){
         if (this.oxygens.size() == 0){
             return 0;
@@ -66,6 +88,7 @@ public class Astronaut implements Serializable{
             this.oxygens.add(oxygenCards[1]);
         } else{
             this.oxygens.remove(oxygenOneCard);
+            this.game.getGameDiscard().add(oxygenOneCard);
         }
 
         if (this.oxygens.size() == 0){
@@ -75,14 +98,28 @@ public class Astronaut implements Serializable{
         return this.oxygens.stream().collect(Collectors.summingInt(oxygen -> oxygen.getValue()));
     }
 
+    /**
+     * Returns the number of spaces between an astronaut and the ship
+     * @return The number of spaces between an astronaut and the ship
+     */
     public int distanceFromShip(){
         return 6 - this.track.size();
     }
 
+    /**
+     * Returns the action cards
+     * @return the action cards
+     */
     public List<Card> getActions(){
         return this.actions.stream().sorted().collect(Collectors.toList());
     }
 
+    /**
+     * Returns the action cards in string format
+     * @param enumerated Enumeration applied or not
+     * @param excludeShields boolean value to exclude shield cards
+     * @return the action cards in string format
+     */
     public String getActionsStr(boolean enumerated, boolean excludeShields){
         if (this.isAlive()){
             Map<String, Integer> processedActionCards = this.actions
@@ -111,12 +148,20 @@ public class Astronaut implements Serializable{
         return "";
     }
 
+    /**
+     * Returns all cards the astronaut has
+     * @return All cards the astronaut has
+     */
     public List<Card> getHand(){
         List<Card> hand = new ArrayList<Card>(this.actions);
         hand.addAll(this.oxygens);
         return hand.stream().sorted().collect(Collectors.toList());
     }
 
+    /**
+     * Returns all cards the astronaut has (action cards plus oxygen cards) in string format
+     * @return All cards the astronaut has (action cards plus oxygen cards) in string format
+     */
     public String getHandStr(){
         Map<String, Integer> processedActionCards = this.actions.stream()
         .collect(Collectors.groupingBy(Card::toString, Collectors.summingInt(e -> 1)));
@@ -156,10 +201,18 @@ public class Astronaut implements Serializable{
          + actionStrings.stream().sorted().collect(Collectors.joining(", ")));
     }
 
+    /**
+     * Returns the list of track cards
+     * @return the list of track cards
+     */
     public Collection<Card> getTrack(){
         return this.track;
     }
 
+    /**
+     * Removes the specified card from an astronaut's hand
+     * @param card the specified card
+     */
     public void hack(Card card){
         if (card == null){
             throw new IllegalArgumentException();
@@ -188,6 +241,11 @@ public class Astronaut implements Serializable{
         }
     }
 
+    /**
+     * Removes the specified card from an astronaut's hand
+     * @param card the specified card's name
+     * @return the specified card from an astronaut's hand
+     */
     public Card hack(String card){
         if (card == null){
             throw new IllegalArgumentException();
@@ -218,16 +276,31 @@ public class Astronaut implements Serializable{
         return removingCard;
     }
 
+    /**
+     * Returns the number of instances of a particular card in an astronaut's hand
+     * @param card Specified card's name
+     * @return the number of instances of a particular card in an astronaut's hand
+     */
     public int hasCard(String card){
         ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
         allCards.addAll(this.oxygens);
         return allCards.stream().filter(c -> c.toString().equals(card)).toArray().length;
     }
 
+    /**
+     * Return a boolean value if the astronaut has Solar Flare card
+     * @return a boolean value if the astronaut has Solar Flare card
+     */
     public boolean hasMeltedEyeballs(){
-        return this.track.stream().anyMatch(card -> card.toString().equals(SpaceDeck.SOLAR_FLARE));
+        return this.track.stream()
+        .anyMatch(card -> card.toString().equals(SpaceDeck.SOLAR_FLARE));
     }
 
+    /**
+     * Returns true if the astronaut reaches the ship and is still alive
+     * and reached to the ship
+     * @return Boolean value
+     */
     public boolean hasWon(){
         if (this.distanceFromShip() == 0 && this.oxygenRemaining() >= 1){
             return true;
@@ -236,6 +309,10 @@ public class Astronaut implements Serializable{
         return false;
     }
 
+    /**
+     * Return false if the Astronaut ran out of Oxygen
+     * @return Boolean value
+     */
     public boolean isAlive(){
         if (this.oxygenRemaining() > 0){
             return true;
@@ -243,6 +320,10 @@ public class Astronaut implements Serializable{
         return false;
     }
 
+    /**
+     * Removes and returns the topmost card from the astronaut's track
+     * @return The topmost card from an astronaut's track
+     */
     public Card laserBlast(){
         if (this.track.size() == 0){
             throw new IllegalArgumentException();
@@ -255,6 +336,10 @@ public class Astronaut implements Serializable{
         return card;
     }
 
+    /**
+     * Returns the total value of all Oxygen cards the astronaut has
+     * @return the total value of all Oxygen cards the astronaut has
+     */
     public int oxygenRemaining(){
         // Get total number of oxygen the astronaut has
         int totalOxygenValue = 0;
@@ -266,6 +351,11 @@ public class Astronaut implements Serializable{
         return totalOxygenValue;
     }
 
+    /**
+     * Return null if the astronaut is still in the starting space 
+     * else the topmost card from the track of Astronaut
+     * @return The topmost card from the track of Astronaut
+     */
     public Card peekAtTrack(){
         if (this.distanceFromShip() < 0 || this.distanceFromShip() == 6){
             return null;
@@ -273,6 +363,10 @@ public class Astronaut implements Serializable{
         return new LinkedList<Card>(this.track).getLast();
     }
 
+    /**
+     * Removes and return an Oxygen(1) card from the astronaut's hand
+     * @return an Oxygen(1) card from the astronaut's hand
+     */
     public Oxygen siphon(){
         Oxygen oxygenCard = this.oxygens.stream().findFirst().orElse(null);
 
@@ -294,6 +388,10 @@ public class Astronaut implements Serializable{
         return oxygenCards[1];
     }
 
+    /**
+     * Removes and returns a random Card from an astronaut's hand
+     * @return a random Card from an astronaut's hand
+     */
     public Card steal(){
         ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
         allCards.addAll(this.oxygens);
@@ -312,12 +410,20 @@ public class Astronaut implements Serializable{
         return stolenCard;
     }
 
+    /**
+     * Swaps an astronaut's track with the track of the specified Astronaut.
+     * @param swapee other astronaut
+     */
     public void swapTrack(Astronaut swapee){
         Collection<Card> swapeeTrack = swapee.getTrack();
         swapee.track = this.track;
         this.track = swapeeTrack;
     }
 
+    /**
+     * Expression of Astronaut
+     * @return Expression of Astronaut
+     */
     public String toString() {
         if (this.isAlive()){
             return this.name;
