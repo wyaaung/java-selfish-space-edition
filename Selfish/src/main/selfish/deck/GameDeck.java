@@ -1,7 +1,8 @@
 package selfish.deck;
 
 import java.util.ArrayList;
-import java.io.IOException;
+
+import selfish.GameException;
 
 /** GameDeck Class (Extended from Deck Class)
  *  @author Wai Yan Aung
@@ -51,9 +52,9 @@ public class GameDeck extends Deck{
     /**
      * GameDeck Constructor
      * @param path The text filepath for action cards
-     * @throws IOException Type of Exception
+     * @throws GameException Type of Exception
      */
-    public GameDeck(String path) throws IOException{
+    public GameDeck(String path) throws GameException{
         // Load action cards first
         this.add(Deck.loadCards(path));
 

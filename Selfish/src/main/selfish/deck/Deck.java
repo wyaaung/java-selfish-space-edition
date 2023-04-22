@@ -2,6 +2,7 @@ package selfish.deck;
 
 import java.io.Serializable;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -11,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Random;
+
+import selfish.GameException;
 
 /** Deck Class
  *  @author Wai Yan Aung
@@ -32,24 +35,31 @@ public abstract class Deck implements Serializable{
      * Load cards from a text file
      * @param path Text filepath for cards
      * @return List of cards
-     * @throws IOException Type of Exception
+     * @throws GameException Type of Exception
      */
-    protected static List<Card> loadCards(String path) throws IOException{
-        BufferedReader fileStream = new BufferedReader(new FileReader(path));
+    protected static List<Card> loadCards(String path) throws GameException{
 
+        BufferedReader fileStream = null;
         List<Card> returningCards = new ArrayList<Card>();
+        try {
+            fileStream = new BufferedReader(new FileReader(path));
 
-        String temporaryString = fileStream.readLine();
-        while (temporaryString != null) {
-            if (!temporaryString.equals("NAME; DESCRIPTION; QUANTITY")){
-                Card[] cards = stringToCards(temporaryString);
+            String temporaryString = fileStream.readLine();
+            while (temporaryString != null) {
+                if (!temporaryString.equals("NAME; DESCRIPTION; QUANTITY")){
+                    Card[] cards = stringToCards(temporaryString);
 
-                Collections.addAll(returningCards, cards);
+                    Collections.addAll(returningCards, cards);
+                }
+                temporaryString = fileStream.readLine();
             }
-            temporaryString = fileStream.readLine();
-        }
 
-        fileStream.close();
+            fileStream.close();
+        } catch (FileNotFoundException e){
+            throw new GameException("", e);
+        } catch (IOException e){
+            throw new GameException("", e);
+        }
 
         return returningCards;
     }

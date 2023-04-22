@@ -1,7 +1,9 @@
 package selfish.deck;
 
-import java.io.IOException;
 import java.util.List;
+
+import selfish.GameException;
+
 public class SpaceDeck extends Deck{
     public static final String ASTEROID_FIELD = "Asteroid field";
     public static final String BLANK_SPACE = "Blank space";
@@ -25,9 +27,9 @@ public class SpaceDeck extends Deck{
     /**
      * SpaceDeck Constructor
      * @param path The text filepath for space cards
-     * @throws IOException
+     * @throws GameException Type of Exception
      */
-    public SpaceDeck(String path) throws IOException{
+    public SpaceDeck(String path) throws GameException{
         List<Card> loadedCards = Deck.loadCards(path);
         this.add(loadedCards);
     }
