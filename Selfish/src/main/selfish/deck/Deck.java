@@ -104,7 +104,7 @@ public abstract class Deck implements Serializable{
             throw new IllegalStateException();
         }
 
-        LinkedList<Card> linkedList = new LinkedList<Card>(cards);
+        LinkedList<Card> linkedList = new LinkedList<Card>(this.cards);
         Card card = linkedList.removeLast();
 
         this.cards.remove(card);
