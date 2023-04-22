@@ -340,15 +340,15 @@ public class GameEngine implements Serializable{
      */
     public void startTurn(){
         if (!this.hasStarted){
-            throw new IllegalStateException("HAS NOT STARTED");
+            throw new IllegalStateException();
         }
 
         if (this.gameOver()){
-            throw new IllegalStateException("GAME OVER");
+            throw new IllegalStateException();
         }
 
         if (this.currentPlayer != null){
-            throw new IllegalStateException("ADSADASDS");
+            throw new IllegalStateException();
         }
 
         currentPlayer = activePlayers.iterator().next();
