@@ -12,7 +12,7 @@ public class Oxygen extends Card{
 
     /**
      * Public Constructor of Oxygen (Specialized Card)
-     * @param value
+     * @param value Oxygen value
      */
     public Oxygen(int value) {
         super("Oxygen", "Description Oxygen");
@@ -39,9 +39,9 @@ public class Oxygen extends Card{
     }
 
     /**
-     * 
-     * @param oxygen
-     * @return
+     * To compare two oxygen card's values
+     * @param oxygen Oxygen card
+     * @return 0 if two oxygen cards are equal
      */
     public int compareTo(Oxygen oxygen){
         return this.value - oxygen.value;
