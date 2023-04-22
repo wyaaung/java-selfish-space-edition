@@ -60,14 +60,16 @@ public class Astronaut implements Serializable{
             Oxygen oxygenTwoCard = this.oxygens.stream()
             .filter(oxygen -> (oxygen.getValue() == 2))
             .findFirst().orElse(null);
+
             Oxygen[] oxygenCards = this.game.splitOxygen(oxygenTwoCard);
             this.oxygens.remove(oxygenTwoCard);
             this.oxygens.add(oxygenCards[1]);
         } else{
             this.oxygens.remove(oxygenOneCard);
-            if (this.oxygens.size() == 0){
-                this.game.killPlayer(this);
-            }
+        }
+
+        if (this.oxygens.size() == 0){
+            this.game.killPlayer(this);
         }
 
         return this.oxygens.stream().collect(Collectors.summingInt(oxygen -> oxygen.getValue()));
@@ -163,14 +165,26 @@ public class Astronaut implements Serializable{
             throw new IllegalArgumentException();
         }
 
-        if (card instanceof Oxygen){
-            this.oxygens.remove(card);
-        }else{
-            this.actions.remove(card);
+        ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
+        allCards.addAll(this.oxygens);
+
+        Card removingCard = allCards.stream()
+            .filter(c -> c.equals(card))
+            .findFirst().orElse(null);
+
+        if (removingCard == null){
+            throw new IllegalArgumentException();
         }
 
-        if (this.oxygens.size() == 0){
+        if (card instanceof Oxygen){
+            this.oxygens.remove(removingCard);
+        }else{
+            this.actions.remove(removingCard);
+        }
+
+        if (this.oxygenRemaining() == 0){
             this.actions.removeAll(this.actions);
+            this.game.killPlayer(this);
         }
     }
 
@@ -196,8 +210,9 @@ public class Astronaut implements Serializable{
             this.actions.remove(removingCard);
         }
 
-        if (this.oxygens.size() == 0){
+        if (this.oxygenRemaining() == 0){
             this.actions.removeAll(this.actions);
+            this.game.killPlayer(this);
         }
 
         return removingCard;
@@ -267,9 +282,16 @@ public class Astronaut implements Serializable{
 
         if (oxygenCard.getValue() == 1){
             this.oxygens.remove(oxygenCard);
+            if (this.oxygenRemaining() == 0){
+                this.game.killPlayer(this);
+            }
             return oxygenCard;
         }
-        return null;
+
+        Oxygen[] oxygenCards = this.game.splitOxygen(oxygenCard);
+        this.oxygens.remove(oxygenCard);
+        this.oxygens.add(oxygenCards[1]);
+        return oxygenCards[1];
     }
 
     public Card steal(){
@@ -280,6 +302,9 @@ public class Astronaut implements Serializable{
 
         if (stolenCard instanceof Oxygen){
             this.oxygens.remove(stolenCard);
+            if (this.oxygenRemaining() == 0){
+                this.game.killPlayer(this);
+            }
             return stolenCard;
         }
 
