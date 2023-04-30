@@ -257,7 +257,7 @@ public class ExceptionTest {
 		GameDeck deck = (GameDeck)gameDeckField.get(engine);
 
 		int attempts = 0; int sz = discard.size();
-		while (discard.size() < 5 && attempts < 100) {
+		while (discard.size() < 5 && ++attempts < 100) {
 			Card c = deck.draw();
 			if (!(c.toString().equals(GameDeck.OXYGEN_1) || c.toString().equals(GameDeck.OXYGEN_2))) {
 				discard.add(c);

@@ -64,7 +64,7 @@ public class GameEngineTest {
 
 	public void killCurrentPlayer(Astronaut currentPlayer) {
 		int attempts = 0;
-		while (currentPlayer.breathe() > 0 && attempts < 100) ++attempts;
+		while (currentPlayer.breathe() > 0 && ++attempts < 100);
 		assertNotEquals(99, attempts);
 	}
 
