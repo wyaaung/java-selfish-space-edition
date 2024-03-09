@@ -1,12 +1,9 @@
 package selfish.javadoc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.HashMap;
-import java.util.List;
-
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("javadoc")
 @Tag("Card")
@@ -14,7 +11,7 @@ public class JavadocCardTest {
 
     String FQCN = "selfish.deck.Card";
 
-   @Test
+    @Test
     public void testAllMembersDocumented() {
         assertTrue(JavadocMemberHelper.allMembersAreDocumented(FQCN));
     }

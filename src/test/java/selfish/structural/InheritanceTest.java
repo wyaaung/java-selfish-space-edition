@@ -1,12 +1,11 @@
 package selfish.structural;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.Serializable;
-
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 @Tag("structural")
@@ -32,57 +31,57 @@ public class InheritanceTest {
     }
 
     @Test
-	public void testAstronautImplementsSerializable() {
+    public void testAstronautImplementsSerializable() {
         assertTrue(isSerializable("selfish.Astronaut"));
-	}
+    }
 
     @Test
-	public void testCardImplementsComparable() {
-		assertTrue(isComparable("selfish.deck.Card"));
-	}
+    public void testCardImplementsComparable() {
+        assertTrue(isComparable("selfish.deck.Card"));
+    }
 
     @Test
-	public void testCardImplementsSerializable() {
+    public void testCardImplementsSerializable() {
         assertTrue(isSerializable("selfish.deck.Card"));
-	}
+    }
 
     @Test
-	public void testDeckImplementsSerializable() {
+    public void testDeckImplementsSerializable() {
         assertTrue(isSerializable("selfish.deck.Deck"));
-	}
+    }
 
     @Test
-	public void testGameDeckIsDeck() {
+    public void testGameDeckIsDeck() {
         assertTrue(isDeckSubclass("selfish.deck.GameDeck"));
-	}
+    }
 
     @Test
-	public void testGameEngineImplementsSerializable() {
+    public void testGameEngineImplementsSerializable() {
         assertTrue(isSerializable("selfish.GameEngine"));
-	}
+    }
 
     @Test
-	public void testGameExceptionIsException() {
-		Class<?> clazz = ClassExistenceTest.getClass("selfish.GameException");
+    public void testGameExceptionIsException() {
+        Class<?> clazz = ClassExistenceTest.getClass("selfish.GameException");
         assertTrue(Exception.class.isAssignableFrom(clazz));
-	}
+    }
 
     @Test
-	public void testOxygenIsCard() {
-		Class<?> superclass = ClassExistenceTest.getClass("selfish.deck.Card");
-		Class<?> subclass = ClassExistenceTest.getClass("selfish.deck.Oxygen");
+    public void testOxygenIsCard() {
+        Class<?> superclass = ClassExistenceTest.getClass("selfish.deck.Card");
+        Class<?> subclass = ClassExistenceTest.getClass("selfish.deck.Oxygen");
         if (subclass == null || superclass == null) fail();
         assertTrue(superclass.isAssignableFrom(subclass));
-	}
+    }
 
     @Test
-	public void testOxygenImplementsComparable() {
-		assertTrue(isComparable("selfish.deck.Oxygen"));
-	}
+    public void testOxygenImplementsComparable() {
+        assertTrue(isComparable("selfish.deck.Oxygen"));
+    }
 
     @Test
-	public void testSpaceDeckIsDeck() {
-		assertTrue(isDeckSubclass("selfish.deck.SpaceDeck"));
-	}
+    public void testSpaceDeckIsDeck() {
+        assertTrue(isDeckSubclass("selfish.deck.SpaceDeck"));
+    }
 
 }

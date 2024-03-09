@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,12 +16,12 @@ class JavadocHelper {
     public static Path fqcnToFilePath(String fqcn) throws IOException {
         // Note that split takes in a regex so we have to escape the dot here
         String[] elems = fqcn.split("\\.");
-        elems[elems.length-1] += ".java";
+        elems[elems.length - 1] += ".java";
 
         // Varargs would be nice here, but since we'll either have 2 or 3
         // elements it's not essential
-        if (elems.length != 2 && elems.length !=3) {
-          throw new IllegalArgumentException();
+        if (elems.length != 2 && elems.length != 3) {
+            throw new IllegalArgumentException();
         }
 
         // Nasty hack because we're not running from inside the src directory
@@ -36,7 +36,7 @@ class JavadocHelper {
         // Combination of the above two nasty hacks :(
         Path p = Paths.get(elems[0], elems[1], elems[2], elems[3], elems[4]);
         if (elems.length > 5) {
-          p = Paths.get(elems[0], elems[1], elems[2], elems[3], elems[4], elems[5]);
+            p = Paths.get(elems[0], elems[1], elems[2], elems[3], elems[4], elems[5]);
         }
 
         return p.toAbsolutePath();
@@ -46,33 +46,33 @@ class JavadocHelper {
     // I don't think this is problematic given that students see whether or
     // not the test is failing and can easily adjust their code accordingly.
     public static String extractJavadocableSignature(String line) {
-      line = line.strip();
-      if (lineContainsModifiers(line)) {
-          if (line.startsWith("public ") || line.startsWith("protected ")) {
-              while (lineContainsModifiers(line)) {
-                  line = line.split(" ", 2)[1];
-              }
-              if (line.endsWith("{")) {
-                  StringBuilder sb = new StringBuilder(line);
-                  sb.deleteCharAt(line.length() - 1);
-                  line = sb.toString().strip();
-              }
-              if (line.endsWith(";")) {
-                  StringBuilder sb = new StringBuilder(line);
-                  sb.deleteCharAt(line.length() - 1);
-                  line = sb.toString().split("=", 2)[0].strip();
-              }
-              return line;
-          }
+        line = line.strip();
+        if (lineContainsModifiers(line)) {
+            if (line.startsWith("public ") || line.startsWith("protected ")) {
+                while (lineContainsModifiers(line)) {
+                    line = line.split(" ", 2)[1];
+                }
+                if (line.endsWith("{")) {
+                    StringBuilder sb = new StringBuilder(line);
+                    sb.deleteCharAt(line.length() - 1);
+                    line = sb.toString().strip();
+                }
+                if (line.endsWith(";")) {
+                    StringBuilder sb = new StringBuilder(line);
+                    sb.deleteCharAt(line.length() - 1);
+                    line = sb.toString().split("=", 2)[0].strip();
+                }
+                return line;
+            }
 
-      }
-      return null;
+        }
+        return null;
     }
 
     public static String stripCommentSignifier(String line) {
         line = line.strip();
         if (line.endsWith("*/")) {
-            line = line.substring(0, line.length()-2);
+            line = line.substring(0, line.length() - 2);
         }
         if (line.startsWith("/**")) {
             line = line.substring(3);
@@ -94,7 +94,7 @@ class JavadocHelper {
         boolean nonaccess = line.startsWith("final ") || line.startsWith("abstract ");
         if (!line.contains("class ")) {
             nonaccess = nonaccess || line.startsWith("static ") || line.startsWith("synchronized ");
-            nonaccess = nonaccess || line.startsWith("transient ") || line.startsWith("volatile ");  
+            nonaccess = nonaccess || line.startsWith("transient ") || line.startsWith("volatile ");
         }
         return visibility || nonaccess;
     }
@@ -114,11 +114,11 @@ class JavadocHelper {
         while (itr.hasNext()) {
             line = itr.next().strip();
             String sig = extractJavadocableSignature(line);
-            boolean skipOverride = members ? isOverride(fqcn, sig) : false;
+            boolean skipOverride = members && isOverride(fqcn, sig);
             boolean skipMemberType = false;
             if (sig != null) {
                 skipMemberType = sig.contains("class") && members;
-                skipMemberType = skipMemberType || (!sig.contains("class") && !members);    
+                skipMemberType = skipMemberType || (!sig.contains("class") && !members);
             }
             boolean skip = skipOverride || skipMemberType;
 
@@ -134,7 +134,7 @@ class JavadocHelper {
                 docLines = new ArrayList<String>();
             }
             if (sig == null && currentMember != null & line != "" & !isAnnotation(line)) {
-              docLines.add(line);
+                docLines.add(line);
             }
         }
 
@@ -153,7 +153,10 @@ class JavadocHelper {
         while (itr.hasNext()) {
             line = itr.next().strip();
             String sig = extractJavadocableSignature(line);
-            if (sig != null && sig.equals(sigToCheck)) {found = true; continue;}
+            if (sig != null && sig.equals(sigToCheck)) {
+                found = true;
+                continue;
+            }
             if (found) {
                 if (!isAnnotation(line)) break;
                 if (line.equals("@Override")) return true;
@@ -162,4 +165,4 @@ class JavadocHelper {
         return false;
     }
 
-  }
+}

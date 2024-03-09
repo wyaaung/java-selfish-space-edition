@@ -1,14 +1,15 @@
 package selfish.deck;
 
 import java.util.List;
-
 import selfish.GameException;
 
-/** SpaceDeck Class (Extended from Deck Class)
- *  @author Wai Yan Aung
- *  @version 1
+/**
+ * SpaceDeck Class (Extended from Deck Class)
+ *
+ * @author Wai Yan Aung
+ * @version 1
  */
-public class SpaceDeck extends Deck{
+public class SpaceDeck extends Deck {
     // ASTEROID_FIELD's name
     public static final String ASTEROID_FIELD = "Asteroid field";
 
@@ -49,10 +50,11 @@ public class SpaceDeck extends Deck{
 
     /**
      * SpaceDeck Constructor
+     *
      * @param path The text filepath for space cards
      * @throws GameException Type of Exception
      */
-    public SpaceDeck(String path) throws GameException{
+    public SpaceDeck(String path) throws GameException {
         List<Card> loadedCards = Deck.loadCards(path);
         this.add(loadedCards);
     }

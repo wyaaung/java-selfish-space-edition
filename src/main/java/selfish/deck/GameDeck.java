@@ -2,14 +2,15 @@ package selfish.deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import selfish.GameException;
 
-/** GameDeck Class (Extended from Deck Class)
- *  @author Wai Yan Aung
- *  @version 1
+/**
+ * GameDeck Class (Extended from Deck Class)
+ *
+ * @author Wai Yan Aung
+ * @version 1
  */
-public class GameDeck extends Deck{
+public class GameDeck extends Deck {
     // HACK_SUIT's name
     public static final String HACK_SUIT = "Hack suit";
 
@@ -48,49 +49,52 @@ public class GameDeck extends Deck{
     /**
      * GameDeck Constructor
      */
-    public GameDeck(){}
+    public GameDeck() {
+    }
 
     /**
      * GameDeck Constructor
+     *
      * @param path The text filepath for action cards
      * @throws GameException Type of Exception
      */
-    public GameDeck(String path) throws GameException{
+    public GameDeck(String path) throws GameException {
         // Load action cards first
         this.add(Deck.loadCards(path));
 
         // Load Oxygen(2) cards
-        for (int i=0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             this.add(new Oxygen(2));
         }
 
         // Load Oxygen(1) cards
-        for(int i = 0; i < 38; i++){
+        for (int i = 0; i < 38; i++) {
             this.add(new Oxygen(1));
         }
     }
 
     /**
      * Function to draw Oxygen Cards from collection of cards
+     *
      * @param value The value of oxygen card
      * @return Oxygen Card
      */
-    public Oxygen drawOxygen(int value){
+    public Oxygen drawOxygen(int value) {
         int deckSize = this.size();
 
-        if (deckSize == 0){
+        if (deckSize == 0) {
             throw new IllegalStateException();
         }
 
         ArrayList<Card> cardsList = new ArrayList<Card>();
         Oxygen oxygenCard = null;
-        for (int i = 0; i < deckSize; i++){
+        for (int i = 0; i < deckSize; i++) {
             Card tempCard = this.draw();
 
-            if (tempCard instanceof Oxygen && ((Oxygen) tempCard).getValue() == value){
+            if (tempCard instanceof Oxygen && ((Oxygen) tempCard).getValue() == value) {
                 oxygenCard = (Oxygen) tempCard;
                 break;
-            }else{
+            } else {
                 cardsList.add(tempCard);
             }
         }
@@ -98,7 +102,7 @@ public class GameDeck extends Deck{
         Collections.reverse(cardsList);
         this.add(cardsList);
 
-        if (oxygenCard == null){
+        if (oxygenCard == null) {
             throw new IllegalStateException();
         }
 
@@ -107,11 +111,12 @@ public class GameDeck extends Deck{
 
     /**
      * Function to split Oxygen(2) card into two Oxygen(1) cards
+     *
      * @param unit Oxygen(2) card
      * @return List of two Oxygen(1) cards
      */
-    public Oxygen[] splitOxygen(Oxygen unit){
-        if (unit.getValue() != 2){
+    public Oxygen[] splitOxygen(Oxygen unit) {
+        if (unit.getValue() != 2) {
             throw new IllegalArgumentException();
         }
 

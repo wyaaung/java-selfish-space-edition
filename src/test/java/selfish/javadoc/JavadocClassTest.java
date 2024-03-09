@@ -1,20 +1,18 @@
 package selfish.javadoc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("javadoc")
 public class JavadocClassTest {
 
-	public static HashMap<String, List<String>> getClassDocs(String fqcn) {
+    public static HashMap<String, List<String>> getClassDocs(String fqcn) {
         HashMap<String, List<String>> jDoc = null;
         try {
             jDoc = JavadocHelper.extractClassSignaturesAndDocs(fqcn, false);
@@ -25,13 +23,13 @@ public class JavadocClassTest {
     }
 
     public static boolean allClassesAreDocumented(HashMap<String, List<String>> jDoc) {
-        for (String sig: jDoc.keySet()) {
+        for (String sig : jDoc.keySet()) {
             if (jDoc.get(sig).size() == 0) return false;
             int linesBeforeTags = 0;
             boolean foundAt = false;
             boolean foundAuthor = false;
             boolean foundVersion = false;
-            for (String line: jDoc.get(sig)) {
+            for (String line : jDoc.get(sig)) {
                 line = JavadocHelper.stripCommentSignifier(line);
                 if (line.startsWith("@")) foundAt = true;
                 if (!foundAt && line.length() > 0) ++linesBeforeTags;
@@ -49,10 +47,10 @@ public class JavadocClassTest {
         assertNotNull(jDoc);
 
         // Check the expected class is documented
-        String[] parts = fqcn.split("\\."); 
+        String[] parts = fqcn.split("\\.");
         String key = null;
-        for (String sig: jDoc.keySet()) {
-            if (sig.matches("class\\s*" + parts[parts.length-1] + ".*")) {
+        for (String sig : jDoc.keySet()) {
+            if (sig.matches("class\\s*" + parts[parts.length - 1] + ".*")) {
                 key = sig;
                 break;
             }
@@ -62,7 +60,7 @@ public class JavadocClassTest {
 
         // Check all public/protected classes in this file are documented
         assertTrue(allClassesAreDocumented(jDoc));
-	}
+    }
 
     @Test
     public void testAstronautIsDocumented() {

@@ -2,18 +2,16 @@ package selfish.javadoc;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class JavadocMemberHelper {
 
-	public static HashMap<String, List<String>> getMemberDocs(String fqcn) {
+    public static HashMap<String, List<String>> getMemberDocs(String fqcn) {
         HashMap<String, List<String>> jDoc = null;
         try {
             jDoc = JavadocHelper.extractClassSignaturesAndDocs(fqcn, true);
@@ -26,7 +24,7 @@ public class JavadocMemberHelper {
     public static boolean allMembersAreDocumented(String fqcn) {
         HashMap<String, List<String>> jDoc = JavadocMemberHelper.getMemberDocs(fqcn);
 
-        for (String sig: jDoc.keySet()) {
+        for (String sig : jDoc.keySet()) {
             if (jDoc.get(sig).size() == 0) return false;
             if (!hasAppropriateTags(jDoc.get(sig), sig, fqcn)) return false;
         }
@@ -37,8 +35,9 @@ public class JavadocMemberHelper {
         List<String> rtn = new ArrayList<String>();
         String params = "";
         try {
-            params = sig.split("\\(", 2)[1].split("\\)")[0].strip();        
-        } catch (ArrayIndexOutOfBoundsException e) {}
+            params = sig.split("\\(", 2)[1].split("\\)")[0].strip();
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
         if (params.equals("")) return rtn;
 
         for (String p : params.split(",")) {
@@ -52,8 +51,9 @@ public class JavadocMemberHelper {
         List<String> rtn = new ArrayList<String>();
         String throwsStr = "";
         try {
-            throwsStr = sig.split("throws ")[1].strip();  
-        } catch (ArrayIndexOutOfBoundsException e) {}
+            throwsStr = sig.split("throws ")[1].strip();
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
         if (throwsStr.equals("")) return rtn;
 
         for (String t : throwsStr.split(",")) {
@@ -63,7 +63,7 @@ public class JavadocMemberHelper {
     }
 
     public static boolean returnsValue(String fqcn, String sig) throws ArrayIndexOutOfBoundsException {
-        String [] parts = sig.split("\\(");
+        String[] parts = sig.split("\\(");
         if (parts.length == 1) return false;
         parts = parts[0].strip().split(" ");
         if (parts.length == 1) return false;
@@ -78,7 +78,7 @@ public class JavadocMemberHelper {
         int linesBeforeTags = 0;
         boolean foundAt = false;
         boolean foundReturn = false;
-        for (String line: javadocLines) {
+        for (String line : javadocLines) {
             line = JavadocHelper.stripCommentSignifier(line);
             if (line.startsWith("@")) foundAt = true;
             if (line.startsWith("@return ") && line.split(" ").length > 1) foundReturn = true;
@@ -98,8 +98,7 @@ public class JavadocMemberHelper {
         if (linesBeforeTags < 1) return false;
         if (!paramsExpected.equals(paramsFound)) return false;
         if (!throwsExpected.equals(throwsFound)) return false;
-        if (foundReturn != returnsValue(fqcn, sig)) return false;
-        return true;
+        return foundReturn == returnsValue(fqcn, sig);
     }
 
     public static void _testmemberIsDocumented(String fqcn, String memberRegex) {
@@ -108,7 +107,7 @@ public class JavadocMemberHelper {
 
         // Check the expected member is documented
         String key = null;
-        for (String sig: jDoc.keySet()) {
+        for (String sig : jDoc.keySet()) {
             if (sig.matches(memberRegex)) {
                 key = sig;
                 break;
@@ -117,6 +116,6 @@ public class JavadocMemberHelper {
         assertNotNull(key);
         assertTrue(jDoc.get(key).size() > 0);
         assertTrue(hasAppropriateTags(jDoc.get(key), key, fqcn));
-	}
+    }
 
 }
