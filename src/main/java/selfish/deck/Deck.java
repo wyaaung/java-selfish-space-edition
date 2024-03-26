@@ -22,7 +22,7 @@ import selfish.GameException;
 public abstract class Deck implements Serializable {
 
     private static final long serialVersionUID = 5016812401135889608L;
-    private final Collection<Card> cards = new ArrayList<Card>();
+    private final Collection<Card> cards = new ArrayList<>();
 
     /**
      * Deck Constructor
@@ -40,7 +40,7 @@ public abstract class Deck implements Serializable {
     protected static List<Card> loadCards(String path) throws GameException {
 
         BufferedReader fileStream = null;
-        List<Card> returningCards = new ArrayList<Card>();
+        List<Card> returningCards = new ArrayList<>();
         try {
             fileStream = new BufferedReader(new FileReader(path));
 

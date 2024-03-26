@@ -86,7 +86,7 @@ public class GameDeck extends Deck {
             throw new IllegalStateException();
         }
 
-        ArrayList<Card> cardsList = new ArrayList<Card>();
+        ArrayList<Card> cardsList = new ArrayList<>();
         Oxygen oxygenCard = null;
         for (int i = 0; i < deckSize; i++) {
             Card tempCard = this.draw();

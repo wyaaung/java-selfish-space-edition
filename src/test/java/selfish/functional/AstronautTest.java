@@ -920,7 +920,7 @@ public class AstronautTest {
         actionsField.setAccessible(true);
         List<Card> oxygens = (List<Card>) oxygensField.get(astronaut);
         List<Card> actions = (List<Card>) actionsField.get(astronaut);
-        List<Card> oldHand = new ArrayList<Card>();
+        List<Card> oldHand = new ArrayList<>();
         oldHand.addAll(oxygens);
         oldHand.addAll(actions);
         int oldHandSize = oldHand.size();

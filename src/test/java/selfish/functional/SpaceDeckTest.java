@@ -131,7 +131,7 @@ public class SpaceDeckTest {
         Method addMethod = clazz.getDeclaredMethod("add", List.class);
         addMethod.setAccessible(true);
 
-        List<Card> cardsToAdd = new ArrayList<Card>();
+        List<Card> cardsToAdd = new ArrayList<>();
         for (int i = 0; i < 100; ++i) cardsToAdd.add(new Card("Test " + i, "Description"));
         Card zero = cardsToAdd.get(0);
         Card hero = cardsToAdd.get(99);
@@ -156,7 +156,7 @@ public class SpaceDeckTest {
         List<Card> cards = (List<Card>) cardsField.get(spaceDeck);
         Card zero = cards.get(0);
 
-        List<Card> cardsToAdd = new ArrayList<Card>();
+        List<Card> cardsToAdd = new ArrayList<>();
         for (int i = 0; i < 100; ++i) cardsToAdd.add(new Card("Test " + i, "Description"));
         Card newZero = cardsToAdd.get(0);
         Card hero = cardsToAdd.get(99);

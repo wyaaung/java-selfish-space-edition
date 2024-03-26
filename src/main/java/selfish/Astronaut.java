@@ -37,9 +37,9 @@ public class Astronaut implements Serializable {
         this.game = game;
         this.name = name;
 
-        this.actions = new ArrayList<Card>();
-        this.oxygens = new ArrayList<Oxygen>();
-        this.track = new ArrayList<Card>();
+        this.actions = new ArrayList<>();
+        this.oxygens = new ArrayList<>();
+        this.track = new ArrayList<>();
     }
 
     /**
@@ -158,7 +158,7 @@ public class Astronaut implements Serializable {
      * @return All cards the astronaut has
      */
     public List<Card> getHand() {
-        List<Card> hand = new ArrayList<Card>(this.actions);
+        List<Card> hand = new ArrayList<>(this.actions);
         hand.addAll(this.oxygens);
         return hand.stream().sorted().collect(Collectors.toList());
     }
@@ -226,7 +226,7 @@ public class Astronaut implements Serializable {
             throw new IllegalArgumentException();
         }
 
-        ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
+        ArrayList<Card> allCards = new ArrayList<>(this.actions);
         allCards.addAll(this.oxygens);
 
         Card removingCard = allCards.stream()
@@ -260,7 +260,7 @@ public class Astronaut implements Serializable {
             throw new IllegalArgumentException();
         }
 
-        ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
+        ArrayList<Card> allCards = new ArrayList<>(this.actions);
         allCards.addAll(this.oxygens);
 
         Card removingCard = allCards.stream()
@@ -292,7 +292,7 @@ public class Astronaut implements Serializable {
      * @return the number of instances of a particular card in an astronaut's hand
      */
     public int hasCard(String card) {
-        ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
+        ArrayList<Card> allCards = new ArrayList<>(this.actions);
         allCards.addAll(this.oxygens);
         return allCards.stream().filter(c -> c.toString().equals(card)).toArray().length;
     }
@@ -404,7 +404,7 @@ public class Astronaut implements Serializable {
      * @return a random Card from an astronaut's hand
      */
     public Card steal() {
-        ArrayList<Card> allCards = new ArrayList<Card>(this.actions);
+        ArrayList<Card> allCards = new ArrayList<>(this.actions);
         allCards.addAll(this.oxygens);
 
         Card stolenCard = allCards.stream().findAny().orElse(null);

@@ -60,8 +60,8 @@ public class GameEngine implements Serializable {
         this.spaceDiscard = new SpaceDeck();
         this.spaceDeck.shuffle(random);
 
-        this.activePlayers = new ArrayList<Astronaut>();
-        this.corpses = new ArrayList<Astronaut>();
+        this.activePlayers = new ArrayList<>();
+        this.corpses = new ArrayList<>();
         this.currentPlayer = null;
         this.hasStarted = false;
     }
@@ -150,7 +150,7 @@ public class GameEngine implements Serializable {
      * @return all the players in the game including dead ones
      */
     public List<Astronaut> getAllPlayers() {
-        List<Astronaut> allPlayers = new ArrayList<Astronaut>(this.activePlayers);
+        List<Astronaut> allPlayers = new ArrayList<>(this.activePlayers);
         allPlayers.addAll(this.corpses);
         if (currentPlayer != null) {
             allPlayers.add(currentPlayer);

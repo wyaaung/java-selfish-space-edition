@@ -566,7 +566,7 @@ public class GameEngineTest {
         Collection<Astronaut> activePlayers = (Collection<Astronaut>) activePlayersField.get(engine);
         Collection<Astronaut> corpses = (Collection<Astronaut>) corpsesField.get(engine);
         Astronaut currentPlayer = (Astronaut) currentPlayerField.get(engine);
-        List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers);
+        List<Astronaut> expected = new ArrayList<>(activePlayers);
         expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
         expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
@@ -591,7 +591,7 @@ public class GameEngineTest {
         Collection<Astronaut> activePlayers = (Collection<Astronaut>) activePlayersField.get(engine);
         Collection<Astronaut> corpses = (Collection<Astronaut>) corpsesField.get(engine);
         Astronaut currentPlayer = (Astronaut) currentPlayerField.get(engine);
-        List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers);
+        List<Astronaut> expected = new ArrayList<>(activePlayers);
         expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
         expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
@@ -617,7 +617,7 @@ public class GameEngineTest {
         Collection<Astronaut> activePlayers = (Collection<Astronaut>) activePlayersField.get(engine);
         Collection<Astronaut> corpses = (Collection<Astronaut>) corpsesField.get(engine);
         Astronaut currentPlayer = (Astronaut) currentPlayerField.get(engine);
-        List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers);
+        List<Astronaut> expected = new ArrayList<>(activePlayers);
         expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
         expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
@@ -644,7 +644,7 @@ public class GameEngineTest {
         Collection<Astronaut> activePlayers = (Collection<Astronaut>) activePlayersField.get(engine);
         Collection<Astronaut> corpses = (Collection<Astronaut>) corpsesField.get(engine);
         Astronaut currentPlayer = (Astronaut) currentPlayerField.get(engine);
-        List<Astronaut> expected = new ArrayList<Astronaut>(activePlayers);
+        List<Astronaut> expected = new ArrayList<>(activePlayers);
         expected.addAll(corpses);
         if (currentPlayer != null && !expected.contains(currentPlayer)) expected.add(currentPlayer);
         expected.sort((Astronaut a1, Astronaut a2) -> a1.toString().compareTo(a2.toString()));
@@ -1304,9 +1304,9 @@ public class GameEngineTest {
 
         engine = new GameEngine(530886, "io/ActionCards.txt", "io/SpaceCards.txt");
         List<Card> cards = (List<Card>) cardsField.get(engine.getGameDeck());
-        List<Card> markel = new ArrayList<Card>();
-        List<Card> sarah = new ArrayList<Card>();
-        List<Card> terry = new ArrayList<Card>();
+        List<Card> markel = new ArrayList<>();
+        List<Card> sarah = new ArrayList<>();
+        List<Card> terry = new ArrayList<>();
         for (int i = 1; i < 13; ++i) {
             Card c = cards.get(cards.size() - i);
             List toAdd = (i % 3 == 1) ? terry : (i % 3 == 2) ? markel : sarah;
@@ -1330,7 +1330,7 @@ public class GameEngineTest {
         for (Astronaut a : activePlayers) {
             List<Card> actions = (List<Card>) actionsField.get(a);
             List<Oxygen> oxygens = (List<Oxygen>) oxygensField.get(a);
-            List<Card> hand = new ArrayList<Card>(actions);
+            List<Card> hand = new ArrayList<>(actions);
             hand.addAll(oxygens);
             hand.sort(null);
             assertEquals(9, actions.size() + oxygens.size());
@@ -1357,8 +1357,8 @@ public class GameEngineTest {
 
         engine = new GameEngine(530886, "io/ActionCards.txt", "io/SpaceCards.txt");
         List<Card> cards = (List<Card>) cardsField.get(engine.getGameDeck());
-        List<Card> markel = new ArrayList<Card>();
-        List<Card> sarah = new ArrayList<Card>();
+        List<Card> markel = new ArrayList<>();
+        List<Card> sarah = new ArrayList<>();
         for (int i = 1; i < 9; ++i) {
             Card c = cards.get(cards.size() - i);
             List toAdd = (i % 2 == 1) ? markel : sarah;
@@ -1379,7 +1379,7 @@ public class GameEngineTest {
         for (Astronaut a : activePlayers) {
             List<Card> actions = (List<Card>) actionsField.get(a);
             List<Oxygen> oxygens = (List<Oxygen>) oxygensField.get(a);
-            List<Card> hand = new ArrayList<Card>(actions);
+            List<Card> hand = new ArrayList<>(actions);
             hand.addAll(oxygens);
             hand.sort(null);
             assertEquals(9, actions.size() + oxygens.size());

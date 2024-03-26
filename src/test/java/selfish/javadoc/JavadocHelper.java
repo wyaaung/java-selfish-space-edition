@@ -25,7 +25,7 @@ class JavadocHelper {
         }
 
         // Nasty hack because we're not running from inside the src directory
-        List<String> tmp = new ArrayList<String>();
+        List<String> tmp = new ArrayList<>();
         tmp.add("src");
         tmp.add("main");
         tmp.add("java");
@@ -110,7 +110,7 @@ class JavadocHelper {
         Iterator<String> itr = lines.iterator();
         String line = "";
         String currentMember = null;
-        List<String> docLines = new ArrayList<String>();
+        List<String> docLines = new ArrayList<>();
         while (itr.hasNext()) {
             line = itr.next().strip();
             String sig = extractJavadocableSignature(line);
@@ -131,7 +131,7 @@ class JavadocHelper {
                     rtn.put(currentMember, docLines);
                 }
                 currentMember = skip ? null : sig;
-                docLines = new ArrayList<String>();
+                docLines = new ArrayList<>();
             }
             if (sig == null && currentMember != null & line != "" & !isAnnotation(line)) {
                 docLines.add(line);

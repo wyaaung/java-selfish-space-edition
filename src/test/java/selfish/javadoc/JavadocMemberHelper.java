@@ -32,7 +32,7 @@ public class JavadocMemberHelper {
     }
 
     public static List<String> getParams(String sig) throws ArrayIndexOutOfBoundsException {
-        List<String> rtn = new ArrayList<String>();
+        List<String> rtn = new ArrayList<>();
         String params = "";
         try {
             params = sig.split("\\(", 2)[1].split("\\)")[0].strip();
@@ -48,7 +48,7 @@ public class JavadocMemberHelper {
     }
 
     public static List<String> getThrows(String sig) throws ArrayIndexOutOfBoundsException {
-        List<String> rtn = new ArrayList<String>();
+        List<String> rtn = new ArrayList<>();
         String throwsStr = "";
         try {
             throwsStr = sig.split("throws ")[1].strip();
@@ -73,8 +73,8 @@ public class JavadocMemberHelper {
     public static boolean hasAppropriateTags(List<String> javadocLines, String sig, String fqcn) {
         List<String> throwsExpected = getThrows(sig);
         List<String> paramsExpected = getParams(sig);
-        List<String> paramsFound = new ArrayList<String>();
-        List<String> throwsFound = new ArrayList<String>();
+        List<String> paramsFound = new ArrayList<>();
+        List<String> throwsFound = new ArrayList<>();
         int linesBeforeTags = 0;
         boolean foundAt = false;
         boolean foundReturn = false;

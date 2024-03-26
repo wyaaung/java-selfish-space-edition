@@ -135,7 +135,7 @@ public class GameDeckTest {
         Method addMethod = clazz.getDeclaredMethod("add", List.class);
         addMethod.setAccessible(true);
 
-        List<Card> cardsToAdd = new ArrayList<Card>();
+        List<Card> cardsToAdd = new ArrayList<>();
         for (int i = 0; i < 10; ++i)
             for (int j = 0; j < 10; ++j)
                 if ((i + j) % 2 == 0)
@@ -165,7 +165,7 @@ public class GameDeckTest {
         List<Card> cards = (List<Card>) cardsField.get(gameDeck);
         Card zero = cards.get(0);
 
-        List<Card> cardsToAdd = new ArrayList<Card>();
+        List<Card> cardsToAdd = new ArrayList<>();
         for (int i = 0; i < 10; ++i)
             for (int j = 0; j < 10; ++j)
                 if ((i + j) % 2 == 0)
