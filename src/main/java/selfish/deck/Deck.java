@@ -53,12 +53,12 @@ public abstract class Deck implements Serializable {
                 }
                 temporaryString = fileStream.readLine();
             }
-
-            fileStream.close();
         } catch (FileNotFoundException e) {
             throw new GameException("", e);
         } catch (IOException e) {
             throw new GameException("", e);
+        } finally {
+            fileStream.close();
         }
 
         return returningCards;
