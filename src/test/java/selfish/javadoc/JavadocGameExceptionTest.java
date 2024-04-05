@@ -9,16 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("GameException")
 public class JavadocGameExceptionTest {
 
-    String FQCN = "selfish.GameException";
+  String FQCN = "selfish.GameException";
 
-    @Test
-    public void testAllMembersDocumented() {
-        assertTrue(JavadocMemberHelper.allMembersAreDocumented(FQCN));
-    }
+  @Test
+  public void testAllMembersDocumented() {
+    assertTrue(JavadocMemberHelper.allMembersAreDocumented(FQCN));
+  }
 
-    @Test
-    public void testConstructorDocumented() {
-        JavadocMemberHelper._testmemberIsDocumented(FQCN, "GameException\\s*\\(.*");
-    }
+  @Test
+  public void testConstructorDocumented() {
+    JavadocMemberHelper._testmemberIsDocumented(FQCN, "GameException\\s*\\(.*");
+  }
 
 }

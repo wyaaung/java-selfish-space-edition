@@ -8,13 +8,13 @@ package selfish;
  */
 public class GameException extends Exception {
 
-    /**
-     * GameException's constructor
-     *
-     * @param sIn The detail message.
-     * @param e   Throwable exception
-     */
-    public GameException(String sIn, Throwable e) {
-        super(sIn, e);
-    }
+  /**
+   * GameException's constructor
+   *
+   * @param sIn The detail message.
+   * @param e   Throwable exception
+   */
+  public GameException(String sIn, Throwable e) {
+    super(sIn, e);
+  }
 }

@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 @Tag("GameException")
 public class GameExceptionMemberTest {
 
-    // Constructor
+  // Constructor
 
-    @Test
-    public void testConstructorExistsAndIsPublic() throws ClassNotFoundException, NoSuchMethodException {
-        Class clazz = Class.forName("selfish.GameException");
-        Constructor c = clazz.getConstructor(String.class, Throwable.class);
-    }
+  @Test
+  public void testConstructorExistsAndIsPublic() throws ClassNotFoundException, NoSuchMethodException {
+    Class clazz = Class.forName("selfish.GameException");
+    Constructor c = clazz.getConstructor(String.class, Throwable.class);
+  }
 
 }
